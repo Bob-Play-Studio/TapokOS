@@ -12,8 +12,10 @@ public class DisplaySetting extends JPanel implements Runnable {
 	public boolean runningCMD = false, cmd = true;
 	public String command = " ";
 	Thread OS;
+	public boolean runningSetting = false;
 	boolean helpRun = false;
 	boolean send = false;
+	public boolean settingOpen = false;
 	DisplayControl dc = new DisplayControl(this);
 	DisplayDraw dr = new DisplayDraw(this, dc);
 	public DisplaySetting() {
@@ -22,6 +24,7 @@ public class DisplaySetting extends JPanel implements Runnable {
 		this.setDoubleBuffered(true);
 		this.addKeyListener(dc);
 		this.addMouseListener(dc);
+		this.setFocusable(true);
 	}
 	public void OSthread() {
 		OS = new Thread(this);
@@ -32,12 +35,10 @@ public class DisplaySetting extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.drawImage(dr.screen, 0, 0, WIDTH, HEIGHT, null);
 		dr.drawMenu(g2);
-		if(dc.rightClick) {
-			runningCMD = false;
-			
+		if(runningSetting) {
+			dr.drawSetting(g2);
 		}
 		if(dc.cmdClick && cmd) {
-			runningCMD = true;
 			if(runningCMD) {
 				dr.drawCMD(g2);
 				dr.drawTextCmd(g2);
@@ -51,15 +52,21 @@ public class DisplaySetting extends JPanel implements Runnable {
 	}
 	public void save() {
 		try {
-			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("save.txt", true)));
+			PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("save.txt", false)));
 			writer.write(command);
 			writer.println(helpRun);
-			writer.print(runningCMD);
-			writer.print(dc.cmdClick);
-			writer.print(dc.menuOpen);
+			writer.println(runningCMD);
+			writer.println(dc.cmdClick);
+			writer.println(dc.menuOpen);
+			writer.println(dr.cmdX+dr.cmdXrand);
+			writer.println(dr.cmdY+dr.cmdYrand);
+			writer.println(dr.crestX);
+			writer.println(dr.crestY);
+			writer.flush();
+			System.out.println("сохранено");
 			writer.close();
 		} catch(IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR SAVE");
 		}
 	}
 	public void update() {
@@ -152,10 +159,10 @@ public class DisplaySetting extends JPanel implements Runnable {
 				command = "";
 			}
 		}
-		switch(command) {
-		case "help":
-			helpRun = true;
-		break;
+		if(dc.close) {
+			runningCMD = false;
+			dc.cmdClick = false;
+			runningSetting = false;
 		}
 		dr.getOSimage();
 	}

@@ -1,75 +1,8 @@
  false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsetruefalse false
-truetruefalse false
-truetruefalse false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsefalsefalse false
-falsetruefalse false
-truetruefalse false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-truetruetrue false
-falsefalsefalse false
-falsefalsefalse false
-falsetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse false
-truetruefalse
+false
+false
+false
+422
+491
+422
+491

@@ -4,13 +4,21 @@ import java.awt.*;
 import javax.swing.*;
 public class DisplayManager  {
 	public static void main(String[] args) {
+		JPanel panel = new JPanel(new BorderLayout()); 
         JWindow splash = new JWindow();
-        JLabel label = new JLabel("TapokOS загружается...", SwingConstants.CENTER);
+        JLabel label = new JLabel("TapokOS beta 1 загружается...", SwingConstants.CENTER);
+        JLabel label1 = new JLabel("Bob Play Stutio™", SwingConstants.CENTER);
+        label1.setFont(new Font("Arial", Font.BOLD, 12));
+        label1.setForeground(Color.CYAN);
+        label1.setBackground(new Color(30, 30, 40));
+        label1.setOpaque(true);
         label.setFont(new Font("Arial", Font.BOLD, 18));
         label.setForeground(Color.CYAN);
         label.setBackground(new Color(30, 30, 40));
         label.setOpaque(true);
-        splash.add(label);
+        panel.add(label, BorderLayout.CENTER);
+        panel.add(label1, BorderLayout.SOUTH);
+        splash.add(panel);
         splash.setSize(350, 150);
         splash.setLocationRelativeTo(null);
         splash.setVisible(true);

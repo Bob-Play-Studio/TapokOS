@@ -1,12 +1,23 @@
 package backend;
 import java.awt.event.*;
+
+import javax.swing.JOptionPane;
+
 import Display.*;
 import java.awt.*;
 public class DisplayControl implements MouseListener, KeyListener, ActionListener {
 	public boolean leftClick = false, rightClick = false, cmdClick = false, menuOpen = false;;
 	DisplaySetting ds;
-	public boolean q, w, e, r, t, y, u,  i, o, p, a, s, d, f, g, h, j, k, l,z, x, c, v, b, n, m, space, enter, backspace;
+	public String input = "";
+	public boolean q, w, e, r, t, y, u,  i, o, p, a, s, d, f, g, h, j, k, l,z, x, c, v, b, n, m, space, enter, backspace, close;
 	DisplayDraw dr = new DisplayDraw(ds, this);
+	public void command() {
+		switch(input) {
+		case "help":
+			JOptionPane.showMessageDialog(null, "1.help/n 2.exit\n 3.time");
+		break;
+		}
+	}
 	public DisplayControl(DisplaySetting ds) {
 		this.ds = ds;
 	}
@@ -112,6 +123,10 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 		if(code == KeyEvent.VK_BACK_SPACE) {
 			backspace = true;
 		}
+		if(code == KeyEvent.VK_ESCAPE) {
+			close = true;
+			System.out.println("CLOSE ALL");
+		}
 	}
 
 	@Override
@@ -204,6 +219,9 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 		if(code == KeyEvent.VK_BACK_SPACE) {
 			backspace = false;
 		}
+		if(code == KeyEvent.VK_ESCAPE && code == KeyEvent.VK_G) {
+			close = false;
+		}
 		
 	}
 
@@ -212,33 +230,55 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int code = e.getButton();
-        int mouseX = e.getX();
-        int mouseY = e.getY();
-		if(code == MouseEvent.BUTTON1) {
-			leftClick = true;
-			
-			if(mouseX >= dr.cmdX && mouseY >= dr.cmdY && mouseX <= ds.tileSize*2 + dr.cmdX && mouseY < ds.tileSize*2 + dr.cmdY) {
-				cmdClick = true;
-				System.out.println("CLICK");
-			}
-			else if(mouseX >= dr.crestX && mouseY >= dr.crestY && mouseX <= dr.crestX + 15 && mouseY <= dr.crestY + 15) {
-				ds.runningCMD = false;
-				cmdClick = false;
-				System.out.println("CLOSE");
-			}
-			else if(mouseX >= dr.logoX && mouseY >= dr.logoY && mouseX <= dr.logoX + ds.tileSize*2 && mouseY <= dr.logoY + ds.tileSize*2) {
-				menuOpen = true;
-			}
-			else if(mouseX >= dr.logoX && mouseY >= dr.logoY - 48 && mouseX <= dr.logoX + ds.tileSize*2 && mouseY <= dr.logoY-48 + ds.tileSize) {
-				System.exit(0);
-			}
-			
-		}
+	    int code = e.getButton();
+	    int mouseX = e.getX();
+	    int mouseY = e.getY();
+
+	    if (code == MouseEvent.BUTTON1) {
+	        leftClick = true;
+	        if(!ds.runningSetting) {
+	        	if(mouseX >= dr.settingX && mouseY >= dr.settingY && mouseX <= dr.settingX + ds.tileSize * 2 && mouseY <= dr.settingY + ds.tileSize * 2) {
+	        		ds.runningSetting = true;
+	        		ds.settingOpen = true;
+	        		System.out.println("SETTING");
+	        	}
+	        }
+	        if (ds.runningCMD) {
+	            if (mouseX >= dr.crestX && mouseY >= dr.crestY
+		                && mouseX <= dr.crestX + 20 && mouseY <= dr.crestY + 20) {
+	                ds.runningCMD = false;
+	                cmdClick = false;
+	                System.out.println("CLOSE");
+	            }
+	        }
+
+	        if (!ds.runningCMD) {
+	            if (mouseX >= dr.cmdX && mouseY >= dr.cmdY
+	                && mouseX <= dr.cmdX + ds.tileSize * 2
+	                && mouseY <= dr.cmdY + ds.tileSize * 2) {
+	                cmdClick = true;
+	                ds.runningCMD = true;
+	                System.out.println("CLICK");
+	                command();
+	            }
+	        }
+
+	        if (mouseX >= dr.logoX && mouseY >= dr.logoY
+	            && mouseX <= dr.logoX + ds.tileSize * 2
+	            && mouseY <= dr.logoY + ds.tileSize * 2) {
+	            menuOpen = true;
+	        }
+
+	        if (mouseX >= dr.logoX && mouseY >= dr.logoY - 48
+	            && mouseX <= dr.logoX + ds.tileSize * 2
+	            && mouseY <= dr.logoY - 48 + ds.tileSize) {
+	            System.exit(0);
+	        }
+	    }
 	}
+
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -248,7 +288,7 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 		if(code == MouseEvent.BUTTON1) {
 			leftClick = false;
 		}
-		if(code == MouseEvent.BUTTON2) {
+		if(code == MouseEvent.BUTTON3) {
 			rightClick = false;
 		}
 		
