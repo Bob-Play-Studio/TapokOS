@@ -18,6 +18,8 @@ public class DisplaySetting extends JPanel implements Runnable {
 	public boolean settingOpen = false;
 	DisplayControl dc = new DisplayControl(this);
 	DisplayDraw dr = new DisplayDraw(this, dc);
+	public int imageX = dr.settingX + dr.settingXrand;
+	public int imageY = dr.settingY + dr.settingYrand+24;
 	public DisplaySetting() {
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.setBackground(Color.blue);
@@ -33,7 +35,7 @@ public class DisplaySetting extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		g2.drawImage(dr.screen, 0, 0, WIDTH, HEIGHT, null);
+		g2.drawImage(dr.photo, 0, 0, WIDTH, HEIGHT, null);
 		dr.drawMenu(g2);
 		if(runningSetting) {
 			dr.drawSetting(g2);
@@ -175,6 +177,7 @@ public class DisplaySetting extends JPanel implements Runnable {
 				OS.sleep(16);
 			} catch(InterruptedException e) {
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "ERROR SETTING");
 			}
 		}
 	}

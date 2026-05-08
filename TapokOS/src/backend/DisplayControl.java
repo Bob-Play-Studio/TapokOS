@@ -9,7 +9,8 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 	public boolean leftClick = false, rightClick = false, cmdClick = false, menuOpen = false;;
 	DisplaySetting ds;
 	public String input = "";
-	public boolean q, w, e, r, t, y, u,  i, o, p, a, s, d, f, g, h, j, k, l,z, x, c, v, b, n, m, space, enter, backspace, close;
+	public boolean q, w, e, r, t, y, u,  i, o, p, a, s, d, f, g, h, j, k, l,z, x, c, v, b, n, m, space, enter, backspace, close = false,
+			screenClick, screen1Click, screen2Click, screen3Click;
 	DisplayDraw dr = new DisplayDraw(ds, this);
 	public void command() {
 		switch(input) {
@@ -219,7 +220,7 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 		if(code == KeyEvent.VK_BACK_SPACE) {
 			backspace = false;
 		}
-		if(code == KeyEvent.VK_ESCAPE && code == KeyEvent.VK_G) {
+		if(code == KeyEvent.VK_ESCAPE) {
 			close = false;
 		}
 		
@@ -235,7 +236,6 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 	    int code = e.getButton();
 	    int mouseX = e.getX();
 	    int mouseY = e.getY();
-
 	    if (code == MouseEvent.BUTTON1) {
 	        leftClick = true;
 	        if(!ds.runningSetting) {
@@ -277,20 +277,43 @@ public class DisplayControl implements MouseListener, KeyListener, ActionListene
 	            System.exit(0);
 	        }
 	    }
+	    if(code == MouseEvent.BUTTON3) {
+	    	rightClick = true;
+	    	if(mouseX >= ds.imageX && mouseY >= ds.imageY && mouseX <= ds.imageX + ds.tileSize && mouseY <= ds.imageY + ds.tileSize) {
+	    		dr.photo = dr.screen;
+	    		System.out.println("SCREEN RENAME");
+	    		screenClick = true;
+	    }
+	    	if(mouseX >= ds.imageX + 96 && mouseY >= ds.imageY && mouseX <= ds.imageX + 96 + ds.tileSize && mouseY <= ds.imageY + ds.tileSize) {
+	    		dr.photo = dr.screen1;
+	    		System.out.println("SCREEN1 RENAME");
+	    		screen1Click = true;
+	    }
+	    	if(mouseX >= ds.imageX && mouseY >= ds.imageY + 96 && mouseX <= ds.imageX + ds.tileSize && mouseY <= ds.imageY + 96 + ds.tileSize) {
+	    		dr.photo = dr.screen2;
+	    		screen2Click = true;
+	    		System.out.println("SCREEN2 RENAME");
+	    }
+	    	if(mouseX >= ds.imageX + 96 && mouseY >= ds.imageY + 96 && mouseX <= ds.imageX + 96 + ds.tileSize && mouseY <= ds.imageY + 96 + ds.tileSize) {
+	    		dr.photo = dr.screen3;
+	    		System.out.println("SCREEN3 RENAME");
+	    		screen3Click = true;
+	    }
+	    }
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		int code = e.getButton();
-		int x = e.getX();
-		int y = e.getY();
+		int mouseX = e.getX();
+		int mouseY = e.getY();
 		if(code == MouseEvent.BUTTON1) {
 			leftClick = false;
 		}
-		if(code == MouseEvent.BUTTON3) {
-			rightClick = false;
-		}
+	    if(code == MouseEvent.BUTTON3) {
+	    	rightClick = true;
+	    }
 		
 	}
 

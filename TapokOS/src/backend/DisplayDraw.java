@@ -31,7 +31,7 @@ public class DisplayDraw  {
 	public String time = new java.util.Date().toString();
 	DisplayControl dc;
 	DisplaySetting ds;
-	public BufferedImage command, logo, screen, textedit, setting;
+	public BufferedImage command, logo, screen, textedit, setting, photo, screen1, screen2, screen3;
 	public DisplayDraw(DisplaySetting ds, DisplayControl dc) {
 		this.ds = ds;
 		this.dc = dc;
@@ -42,8 +42,23 @@ public class DisplayDraw  {
 			command = ImageIO.read(getClass().getResourceAsStream("/app/command.png"));
 			logo = ImageIO.read(getClass().getResourceAsStream("/logo/logo.png"));
 			screen = ImageIO.read(getClass().getResourceAsStream("/logo/tapokOS.png"));	
+			screen1 = ImageIO.read(getClass().getResourceAsStream("/logo/screen2.png"));
+			screen2 = ImageIO.read(getClass().getResourceAsStream("/logo/screen3.png"));
+			screen3 = ImageIO.read(getClass().getResourceAsStream("/logo/screen4.png"));
 			textedit = ImageIO.read(getClass().getResourceAsStream("/app/textedit.png"));
 			setting = ImageIO.read(getClass().getResourceAsStream("/app/setting.png"));
+			if(dc.screenClick) {
+				photo = screen;
+			}
+			if(dc.screen1Click) {
+				photo = screen1;
+			}
+			if(dc.screen2Click) {
+				photo = screen2;
+			}
+			if(dc.screen3Click) {
+				photo = screen3;
+			}
 		} catch(IOException e) {
 			JOptionPane.showMessageDialog(null, "ERROR LOAD IMAGE");
 		}
@@ -98,7 +113,10 @@ public class DisplayDraw  {
 		g2.setColor(Color.red);
 		g2.fillOval(settingX+settingXrand, settingY+settingYrand, 20, 20);
 		if(ds.settingOpen) {
-			
+			g2.drawImage(screen, ds.imageX, ds.imageY, ds.tileSize, ds.tileSize,  null);
+			g2.drawImage(screen1, ds.imageX+96, ds.imageY, ds.tileSize, ds.tileSize,  null);
+			g2.drawImage(screen2, ds.imageX, ds.imageY+96, ds.tileSize, ds.tileSize,  null);
+			g2.drawImage(screen3, ds.imageX+96, ds.imageY+96, ds.tileSize, ds.tileSize,  null);
 		}
 	}
 }
